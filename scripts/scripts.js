@@ -17,7 +17,7 @@ const apiKey = "4VIr_NV0xF0Lll0lagTFq0veqFYxTG8m";
           html += ' grid-item--width2'
           };
           html += '"><img src="'+value.poster+'"/>';
-          html += '<h3 class="h3--grid">'+value.name+'</h3>'
+          html += '<a href="player.php?id='+value.id+'"><h3 class="h3--grid">'+value.name+'</h3></a>'
           html += '</div>';
           if (counter < 5) {
             counter = counter + 1;

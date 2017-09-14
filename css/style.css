@@ -1,9 +1,4 @@
 /** FONTS **/
-h3.h3--grid {
-  color: #fff;
-  font-size: 1.5em;
-  text-shadow: 2px 2px 2px #707070; }
-
 /** GRID **/
 .grid {
   display: flex;
@@ -20,7 +15,10 @@ h3.h3--grid {
   .grid-item img {
     width: 100%;
     height: auto; }
-  .grid-item h3 {
+  .grid-item a {
+    color: #fff;
+    font-size: 1.5em;
+    text-shadow: 2px 2px 2px #707070;
     position: absolute;
     bottom: 0.5em;
     left: 1em; }
