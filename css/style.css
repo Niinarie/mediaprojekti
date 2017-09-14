@@ -1,0 +1,41 @@
+/** FONTS **/
+h3.h3--grid {
+  color: #fff;
+  font-size: 1.5em;
+  text-shadow: 2px 2px 2px #707070; }
+
+/** GRID **/
+.grid {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap; }
+  @media (min-width: 768px) {
+    .grid {
+      flex-direction: row; } }
+
+.grid-item {
+  flex: 1 1 100%;
+  padding: 0.2em;
+  position: relative; }
+  .grid-item img {
+    width: 100%;
+    height: auto; }
+  .grid-item h3 {
+    position: absolute;
+    bottom: 0.5em;
+    left: 1em; }
+  @media (min-width: 768px) {
+    .grid-item {
+      flex: 1 1 50%; } }
+  @media (min-width: 1024px) {
+    .grid-item {
+      flex: 1 1 33.3333%; } }
+
+.grid-item--width2 {
+  flex: 1 1 100%; }
+  @media (min-width: 768px) {
+    .grid-item--width2 {
+      flex: 1 1 50%; } }
+  @media (min-width: 1024px) {
+    .grid-item--width2 {
+      flex: 1 1 50%; } }
