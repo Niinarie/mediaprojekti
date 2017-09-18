@@ -1,10 +1,8 @@
-const videosUrl = "videos.json";
-const apiURL = "https://api.mongolab.com/api/1/databases/videos/collections/";
-const apiKey = "4VIr_NV0xF0Lll0lagTFq0veqFYxTG8m";
+const apiURL = "http://localhost:3000/";
 
   var getAllVideos = function() {
     $.ajax({
-      url: apiURL+ "videoinfo?apiKey="+apiKey,
+      url: apiURL+ "videos",
       type: "GET",
       contentType: "application/json"
     }).done(function( data ) {
@@ -33,17 +31,28 @@ const apiKey = "4VIr_NV0xF0Lll0lagTFq0veqFYxTG8m";
 
   var getVideoInfo = function(id) {
     $.ajax({
-      url: apiURL+ "videoinfo?q={'id':"+id+"}&apiKey="+apiKey,
+      url: apiURL+ "videos/"+id,
       type: "GET",
       contentType: "application/json"
     }).done(function( data ) {
-      console.log(data[0]);
+      console.log(data);
       videojs('videoPlayer', {
         controls: true,
         autoplay: false,
         preload: 'auto',
-        poster: data[0].poster,      
+        poster: data.poster,      
       });
-      videojs('videoPlayer').src(data[0].src);
+      videojs('videoPlayer').src(data.src);
+    });
+  }
+
+  var tagSearch = function() {
+    var tags = "cats";
+    $.ajax({
+      url: apiURL+ "videoinfo?q={'tags':"+tags+"}&apiKey="+apiKey,
+      type: "GET",
+      contentType: "application/json"
+    }).done(function( data ) {
+      console.log(data);
     });
   }
