@@ -8,4 +8,10 @@ module.exports = function(app) {
 
   app.route('/videos/:videoId')
     .get(videoList.read_a_video);
+  
+  app.route('/videos/search/:text')
+    .get(videoList.find_by_text);
+  
+  app.route('/videos/tags/:tag')
+    .get(videoList.find_by_tags);
 };

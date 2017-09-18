@@ -46,10 +46,10 @@ const apiURL = "http://localhost:3000/";
     });
   }
 
-  var tagSearch = function() {
+  var videoSearch = function() {
     var tags = "cats";
     $.ajax({
-      url: apiURL+ "videoinfo?q={'tags':"+tags+"}&apiKey="+apiKey,
+      url: apiURL+ "videos/search/"+tags,
       type: "GET",
       contentType: "application/json"
     }).done(function( data ) {
