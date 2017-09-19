@@ -24,7 +24,7 @@
 
 <main>
   <div class="container">
-    <div class="video"><video id="videoPlayer" class="video-js vjs-fluid"></video></div>
+    <div class="video vjs-big-play-centered"><video id="videoPlayer" class="video-js vjs-fluid"></video></div>
   </div>
 </main>
 
