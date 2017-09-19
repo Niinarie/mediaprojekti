@@ -1,4 +1,12 @@
-/** FONTS **/
+/* 
+ @media (min-width: 768px) {
+    styles
+  }
+
+   @media (min-width: 1024px) {
+    styles
+  }
+*/
 /** GRID **/
 .grid {
   display: flex;
