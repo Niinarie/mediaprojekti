@@ -42,6 +42,17 @@ const apiURL = "http://localhost:3000/";
         preload: 'auto',
         poster: data.poster,      
       });
+      if (data.subs) {
+        $.each(data.subs, function(key, value){
+         videojs('videoPlayer').addRemoteTextTrack({
+           src: 'subs/'+value.src,
+           kind: value.kind,
+           srclang: value.srclang,
+           label: value.label,
+           default: 'default'
+          })
+        });
+      }
       videojs('videoPlayer').src(data.src);
     });
   }
