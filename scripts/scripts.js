@@ -16,6 +16,7 @@ const apiURL = "http://localhost:3000/";
           };
           html += '"><img src="'+value.poster+'"/>';
           html += '<a href="player.php?id='+value.id+'"><h3 class="h3--grid">'+value.name+'</h3></a>'
+          html += '<a href="player.php?id='+value.id+'"><div class="description">'+value.description+'</div></a>'
           html += '</div>';
           if (counter < 5) {
             counter = counter + 1;
