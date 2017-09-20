@@ -15,7 +15,7 @@ const apiURL = "http://localhost:3000/";
           html += ' grid-item--width2'
           };
           html += '"><img src="'+value.poster+'"/>';
-          html += '<a href="player.php?id='+value.id+'"><h3 class="h3--grid">'+value.name+'</h3></a>'
+          html += '<a href="player.php?id='+value.id+'"><h3 class="h3--grid">'+value.name+'</h3></a>';
           html += '</div>';
           if (counter < 5) {
             counter = counter + 1;
@@ -46,13 +46,24 @@ const apiURL = "http://localhost:3000/";
     });
   }
 
-  var videoSearch = function() {
-    var tags = "cats";
+  var videoSearch = function(tags) {
+    console.log(tags);
     $.ajax({
       url: apiURL+ "videos/search/"+tags,
       type: "GET",
       contentType: "application/json"
     }).done(function( data ) {
-      console.log(data);
+      if (data.length> 0) {
+        $('#searchGrid').html('');
+        $.each(data, function(key, value){
+          var html = '';
+          html += '<div class="grid-item"><img src="'+value.poster+'"/>';
+          html += '<a href="player.php?id='+value.id+'"><h3 class="h3--grid">'+value.name+'</h3></a>';
+          html += '</div>';
+          $('#searchGrid').append(html);
+      });
+      } else {
+        $('#searchGrid').html("No results");
+      }
     });
   }
