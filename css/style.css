@@ -6,6 +6,15 @@
     styles
   }
 */
+body {
+  font-family: "Oswald", sans-serif !important; }
+
+input, button {
+  font-family: "Quicksand", sans-serif !important; }
+
+button {
+  cursor: pointer; }
+
 /** GRID **/
 .grid {
   display: flex;

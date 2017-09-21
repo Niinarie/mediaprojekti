@@ -1,3 +1,15 @@
+body {
+    font-family: $header-font !important;
+}
+
+input, button {
+    font-family: $para-font !important;
+}
+
+button {
+    cursor: pointer;
+}
+
 /** GRID **/
 
 .grid {
