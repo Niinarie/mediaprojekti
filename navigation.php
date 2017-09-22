@@ -1,5 +1,5 @@
 <nav class="nav">
-    <a class="nav-link" href="index.php">Logo</a>
+    <a class="nav-link" href="index.php"><img src="http://users.metropolia.fi/~villa/tagflix/tagflix-logo.png"></a>
     <a class="nav-link" href="#">Playlist</a>
     <form class="nav-item form-inline my-2 my-lg-0">
     <form action="search.php" class="nav-item form-inline my-2 my-lg-0">
