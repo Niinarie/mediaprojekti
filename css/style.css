@@ -7,13 +7,20 @@
   }
 */
 body {
-  font-family: "Oswald", sans-serif !important; }
+  font-family: "Oswald", sans-serif !important;
+  background-color: #fff !important; }
 
 input, button {
-  font-family: "Quicksand", sans-serif !important; }
+  font-family: "Quicksand", sans-serif !important;
+  border: 1px solid #A49A99 !important; }
 
 button {
-  cursor: pointer; }
+  cursor: pointer;
+  color: #A49A99 !important; }
+
+button:hover {
+  background-color: #A49A99 !important;
+  color: #fff !important; }
 
 /** GRID **/
 .grid {
@@ -62,8 +69,12 @@ button {
 .nav-link {
   float: left; }
 
+.nav-link img {
+  width: 40px; }
+
 .nav-item {
-  float: right; }
+  float: right;
+  padding: .5em 1em; }
 
 .description {
   position: absolute;
