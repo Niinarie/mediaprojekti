@@ -10,6 +10,9 @@
   <!-- Videojs: -->
   <link href="http://vjs.zencdn.net/5.19/video-js.css" rel="stylesheet">
 
+  <link href="https://fonts.googleapis.com/css?family=Oswald:400,700&amp;subset=latin-ext" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Quicksand:400,700&amp;subset=latin-ext" rel="stylesheet">
+
   <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
 
   <!-- Bootstrap: -->
