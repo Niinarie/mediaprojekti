@@ -7,6 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title><?php echo $site_title; ?></title>
   <link rel="stylesheet" type="text/css" href="css/style.css">
+  <script src="https://use.fontawesome.com/0b3993a8e0.js"></script>
   <!-- Videojs: -->
   <link href="http://vjs.zencdn.net/5.19/video-js.css" rel="stylesheet">
 
@@ -32,6 +33,7 @@
 </main>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <script src="//vjs.zencdn.net/5.19/video.min.js"></script>
 <script src="scripts/scripts.js"></script>
 <script>

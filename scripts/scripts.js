@@ -1,5 +1,7 @@
 const apiURL = "http://localhost:3000/";
 
+
+
   var getAllVideos = function() {
     $.ajax({
       url: apiURL+ "videos",
@@ -16,6 +18,7 @@ const apiURL = "http://localhost:3000/";
           };
           html += '"><img src="'+value.poster+'"/>';
           html += '<a href="player.php?id='+value.id+'"><h3 class="h3--grid">'+value.name+'</h3></a>';
+          html += '<button class="button--favourite" data-favId='+value.id+'><i class="fa fa-2x fa-plus-square" aria-hidden="true"></i></button>'
           html += '<a href="player.php?id='+value.id+'"><div class="description"><p>'+value.description+'</p></div></a>';
           html += '</div>';
           if (counter < 5) {
@@ -71,6 +74,7 @@ const apiURL = "http://localhost:3000/";
           var html = '';
           html += '<div class="grid-item grid-item-small"><img src="'+value.poster+'"/>';
           html += '<a href="player.php?id='+value.id+'"><h3 class="h3--grid">'+value.name+'</h3></a>';
+          html += '<button class="button--favourite" data-favId='+value.id+'><i class="fa fa-2x fa-plus-square" aria-hidden="true"></i></button>'
           html += '<a href="player.php?id='+value.id+'"><div class="description"><p>'+value.description+'</p></div></a>';
           html += '</div>';
           $('#searchGrid').append(html);
