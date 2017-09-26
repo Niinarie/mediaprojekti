@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
   Video = mongoose.model('Video');
 
 exports.list_all_videos = function(req, res) {
-  Video.find().then(function(err, video) {
+  Video.find(function(err, video) {
     if (err)
       res.send(err);
     res.json(video);
