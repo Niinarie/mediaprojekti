@@ -1,7 +1,7 @@
 <?php
 // Variables
 
-$site_title = "Tagflix";
+$site_title = "Flix";
 
 
 ?>

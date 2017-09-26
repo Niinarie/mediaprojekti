@@ -7,6 +7,10 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title><?php echo $site_title; ?></title>
 
+  <link rel="apple-touch-icon-precomposed" href="img/ico.png">
+  <meta name="msapplication-TileColor" content="#FFFFFF">
+  <meta name="msapplication-TileImage" content="img/ico.png">
+
   <script src="https://use.fontawesome.com/0b3993a8e0.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Oswald:400,700&amp;subset=latin-ext" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Quicksand:400,700&amp;subset=latin-ext" rel="stylesheet">
@@ -34,6 +38,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="scripts/scripts.js"></script>
+
 <script>
   $( document ).ready(function() {
     getAllVideos();

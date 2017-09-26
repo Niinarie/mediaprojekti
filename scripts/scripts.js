@@ -62,6 +62,7 @@ const apiURL = "http://localhost:3000/";
       videojs('videoPlayer').src(data.src);
       $('#videoTitle').html('<h2>'+data.name+'</h2>');
       $('#videoDescription').html('<p>'+data.description+'</p>');
+      $('#videoTags').append('<i class="fa fa-tags" aria-hidden="true"></i>');
       $.each(data.tags, function(key, value) {
         $('#videoTags').append('<span class="player__tags-tag" data-tag='+value+'>'+value+'</span>');
       });

@@ -2,6 +2,7 @@
 @import 'grid';
 @import 'buttons';
 @import 'forms';
+@import 'player';
 
 p {
   font-family: $para-font;
@@ -18,30 +19,40 @@ span {
   font-size: 0.8em;
 }
 
+.desktop {
+  display: none;
+  
+  @media #{$tablet} {
+    display: inline-block;
+  }
+}
 
 //NAVIGATION
     
 .nav {
-  display: inline-block;
   width: 100%;
+  align-items: center;
 }
 
 .nav-link {
-  float: left;
+  font-family: $header-font;
+  font-size: 1em;
+  text-transform: uppercase
 }
 
 .nav-link img {
   width: 40px;
 }
+
+.logo {
+  font-family: $header-font;
+  font-size: 1.5em;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
   
 .nav-item {
-  float: right;
   padding: .5em 1em;
-  width: 100%;
-
-  @media #{$tablet} {
-    width: auto;
-  }
 }
 
 .description {
@@ -90,41 +101,10 @@ span {
 .container {
   width: 100%;
   max-width: 1366px;
+
   &.container--no-gutter {
     min-width: 100%;
     padding: 0;
-  }
-}
-.container__video {
-  min-width: 100%;
-  background-color: #000;
-
-  .video {
-    width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-
-    @media #{$tablet} {
-      width: 80%;
-    }
-  }
-}
-
-.player__info {
-  display: block;
-  margin: 0 auto 1em;
-  padding: 0 0.6em;
-
-  @media #{$tablet} {
-    width: 80%;
-  }
-
-  .player__tags {
-    .player__tags-tag {
-      cursor: pointer;
-      margin: 0 0.8em;
-    }
   }
 }
 

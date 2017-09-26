@@ -36,7 +36,7 @@
     <div class="player__info">
       <div id="videoTitle" class="player__description"></div>
       <div id="videoDescription" class="player__description"></div>
-      <div id="videoTags" class="player__tags"><i class="fa fa-tags" aria-hidden="true"></i></div>
+      <div id="videoTags" class="player__tags"></div>
     </div>
   </div>
 </main>
