@@ -46,6 +46,19 @@ exports.find_by_tags = function(req,res) {
   });
 };
 
+exports.find_by_list = function(req,res) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  console.log(req.body);
+ var array = req.body.list.split(',');
+  Video.find({id: { $in: array }}, function(err,videos) {
+    if (err)
+      res.send(err);
+    console.log(videos);
+    res.json(videos);
+  })
+}
+
 /*
 exports.update_a_task = function(req, res) {
   Task.findOneAndUpdate({_id: req.params.taskId}, req.body, {new: true}, function(err, task) {

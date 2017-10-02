@@ -21,8 +21,8 @@
   cursor: pointer;
   background: none;
   border: 0;
-  position: absolute;
   color: $light-gray;
+  position: absolute;
   top: 0.7em;
   right: 0.7em;
   z-index:900;
@@ -32,6 +32,12 @@
     top:1em;
   }
 }
+
+.button--remove {
+  color: $red;
+}
+
+
 
 .button--favourite:hover {
   color: $white;

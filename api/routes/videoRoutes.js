@@ -14,4 +14,8 @@ module.exports = function(app) {
   
   app.route('/videos/tags/:tag')
     .get(videoList.find_by_tags);
+
+  app.route('/videos/idsearch')
+    .post(videoList.find_by_list);
+
 };

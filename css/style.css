@@ -74,8 +74,8 @@
   cursor: pointer;
   background: none;
   border: 0;
-  position: absolute;
   color: #E8DDD9;
+  position: absolute;
   top: 0.7em;
   right: 0.7em;
   z-index: 900; }
@@ -83,6 +83,9 @@
     .button--favourite {
       font-size: 70%;
       top: 1em; } }
+
+.button--remove {
+  color: #673342; }
 
 .button--favourite:hover {
   color: #fff;
