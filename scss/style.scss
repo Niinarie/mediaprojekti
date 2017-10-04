@@ -3,6 +3,7 @@
 @import 'buttons';
 @import 'forms';
 @import 'player';
+@import 'playlist';
 
 p {
   font-family: $para-font;
@@ -26,12 +27,21 @@ span {
     display: inline-block;
   }
 }
+#video {
+  display: none;
+}
 
 //NAVIGATION
     
 .nav {
   width: 100%;
+  max-width: 1366px;
+  margin:  auto;
   align-items: center;
+  background-color: #000;
+}
+.nav__container {
+  background-color: #000;
 }
 
 .nav-link {

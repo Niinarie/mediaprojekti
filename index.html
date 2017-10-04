@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>FLIX</title>
+
+  <link rel="apple-touch-icon-precomposed" href="img/ico.png">
+  <meta name="msapplication-TileColor" content="#FFFFFF">
+  <meta name="msapplication-TileImage" content="img/ico.png">
+
+  <!-- Videojs -->
+  <link href="http://vjs.zencdn.net/5.19/video-js.css" rel="stylesheet">
+  <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+
+  <script src="https://use.fontawesome.com/0b3993a8e0.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Oswald:400,700&amp;subset=latin-ext" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Quicksand:400,700&amp;subset=latin-ext" rel="stylesheet">
+
+  <!-- Bootstrap: -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+  <div class="nav__container container container--no-gutter">
+  <nav class="nav">
+    <a class="nav-link link-home" href=""><img src="http://users.metropolia.fi/~villa/tagflix/tagflix-logo.png"></a>
+    <a class="nav-link desktop logo link-home" href="">Flix</a>
+    <a id="favourites" class="nav-link" href="">Playlist</a>
+    <form action="" class="nav-item form-inline my-2 my-lg-0">
+        <input id="searchFrm" class="form-control mr-sm-2" type="text" name="q" placeholder="Search" aria-label="Search">
+        <button id="searchBtn" class="btn button button--search btn-outline-success my-2 my-sm-0" type="submit"></button>
+    </form>
+  </nav>
+</div>
+
+<main>
+<div id="video" class="container container--no-gutter">
+    <div class="container__video">
+      <div id="video__div" class="video vjs-big-play-centered"></div>
+    </div>
+  <div class="container container--no-gutter">
+    <div class="player__info">
+      <div id="videoTitle" class="player__description"></div>
+      <div id="videoDescription" class="player__description"></div>
+      <div id="videoTags" class="player__tags"></div>
+    </div>
+  </div>
+</div>
+  <div id="main" class="container">
+    Loading...
+  </div>
+</main>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="//vjs.zencdn.net/5.19/video.min.js"></script>
+<script src="scripts/videojs-playlist.min.js"></script>
+<script src="scripts/scripts.js"></script>
+
+<script>
+  $( document ).ready(function() {
+    getAllVideos();
+  });
+</script>
+</body>
+</html>
