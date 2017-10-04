@@ -205,7 +205,7 @@ const apiURL = "http://localhost:3000/";
       if (data.length> 0) {
         console.log(data);
       } else {
-        $('#favouriteGrid').html("No favouritess");
+        $('#favouriteGrid').html("No favourites");
       }
     });
   }

@@ -44,6 +44,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script src="//vjs.zencdn.net/5.19/video.min.js"></script>
+<script src="scripts/videojs-playlist.min.js"></script>
 <script src="scripts/scripts.js"></script>
 <script>
   $( document ).ready(function() {

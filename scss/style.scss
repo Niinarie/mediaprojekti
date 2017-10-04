@@ -65,6 +65,12 @@ span {
   height: 98%;
   padding: 20px;
   margin: 0;
+
+  -moz-transition: all 0.2s ease-out;  /* FF4+ */
+  -o-transition: all 0.2s ease-out;  /* Opera 10.5+ */
+  -webkit-transition: all 0.2s ease-out;  /* Saf3.2+, Chrome */
+  -ms-transition: all 0.2s ease-out;  /* IE10? */
+  transition: all 0.2s ease-out;  
   
   /* IE 8 */
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
@@ -88,6 +94,12 @@ span {
   -webkit-flex-direction: column;
 }
 .description:hover {
+
+  -moz-transition: all 0.2s ease-out;  /* FF4+ */
+  -o-transition: all 0.2s ease-out;  /* Opera 10.5+ */
+  -webkit-transition: all 0.2s ease-out;  /* Saf3.2+, Chrome */
+  -ms-transition: all 0.2s ease-out;  /* IE10? */
+  transition: all 0.2s ease-out;  
   /* IE 8 */
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
   /* IE 5-7 */
