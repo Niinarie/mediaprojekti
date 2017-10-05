@@ -1,20 +1,20 @@
 const apiURL = "http://localhost:3000/";
 
-  var addToFav = function(id) {
-    let favs;
-    if (localStorage.getItem('favs') === null) {
-      favs = [];
-    } else {
-      favs = JSON.parse(localStorage.getItem('favs'));
-    }
-
-    if (!this.checkIfFavExists(id, favs)) {
-      favs.push(id);
-      localStorage.setItem('favs', JSON.stringify(favs));
-      console.log(id+' Added to favs');
-      getFavs();
-    }
+var addToFav = function(id) {
+  let favs;
+  if (localStorage.getItem('favs') === null) {
+    favs = [];
+  } else {
+    favs = JSON.parse(localStorage.getItem('favs'));
   }
+
+  if (!this.checkIfFavExists(id, favs)) {
+    favs.push(id);
+    localStorage.setItem('favs', JSON.stringify(favs));
+    console.log(id+' Added to favs');
+    getFavs();
+  }
+}
   
   var removeFav = function(id) {
     // remove favourite from localStorage list
@@ -77,6 +77,7 @@ const apiURL = "http://localhost:3000/";
     if($('#videoPlayer').length) {
       videojs('videoPlayer').dispose();
     }
+    $('#playlist').html('');
     $('#video').css({display: 'none'});
     $.ajax({
       url: apiURL+ "videos",
@@ -135,6 +136,7 @@ const apiURL = "http://localhost:3000/";
     if($('#videoPlayer').length) {
       videojs('videoPlayer').dispose();
     }
+    $('#playlist').html('');
     $('#video__div').html('<video id="videoPlayer" class="video-js vjs-fluid"></video>');
     videojs('videoPlayer', {
       controls: true,
@@ -172,6 +174,7 @@ const apiURL = "http://localhost:3000/";
       videojs('videoPlayer').dispose();
     }
     $('#video').css({display: 'none'});
+    $('#playlist').html('');
     $('#main').html('Loading...');
     console.log(tags);
     $.ajax({
@@ -223,8 +226,7 @@ const apiURL = "http://localhost:3000/";
     if($('#videoPlayer').length) {
       videojs('videoPlayer').dispose();
     }
-    $('#video').css({display: 'none'});
-    $('#main').html('Loading...');
+    $('#video__div').html('<video id="videoPlayer" class="video-js vjs-fluid vjs-playlistvideo"></video>');
     let favourites = getFavs();
     console.log(favourites.toString());
     $.ajax({
@@ -235,8 +237,64 @@ const apiURL = "http://localhost:3000/";
       }
     }).done(function( data ) {
       if (data.length> 0) {
-        $('#main').html('So fav!');
-        console.log(data);
+        videojs('videoPlayer', {
+          controls: true,
+          autoplay: true,
+          preload: 'none'
+        }, function() {
+          this.on('loadstart', function(){
+            let info = playlist[videojs('videoPlayer').playlist.currentItem()];
+            $('#videoTitle').html('<h2>'+info.name+'</h2>');
+            $('#videoDescription').html('<p>'+info.description+'</p>');
+            $('#videoTags').html('<i class="fa fa-tags" aria-hidden="true"></i>');
+            $.each(info.tags, function(key, value) {
+              $('#videoTags').append('<span class="player__tags-tag" data-tag='+value+'>'+value+'</span>');
+            });
+      
+        });
+        });
+        $('#playlist').html('<div class="playlist-container"><ul class="vjs-playlist"></ul></div>');
+        let playlist = [];
+          $.each(data, function(key,value) {
+            let video = {
+              name: value.name,
+              description: value.description,
+              sources: value.src,
+              thumbnail: [{
+                src: value.poster
+              }],
+              tags: value.tags
+            };
+            if (value.subs) {
+              let subs = [];
+              $.each(value.subs, function(key, value){
+                let sub = {
+                  kind: value.kind,
+                  label: value.label,
+                  srclang: value.srclang,
+                  src: 'subs/'+value.src,
+                  default: 'default'
+                }
+                subs.push(sub);
+               });
+               video.textTracks = subs;
+            }
+            playlist.push(video);
+          })
+          videojs('videoPlayer').playlist(playlist);
+          videojs('videoPlayer').playlist.autoadvance(0);
+          videojs('videoPlayer').playlistUi();
+          $('#videoTitle').html('<h2>'+playlist[0].name+'</h2>');
+          $('#videoDescription').html('<p>'+playlist[0].description+'</p>');
+          $('#videoTags').html('<i class="fa fa-tags" aria-hidden="true"></i>');
+          $.each(playlist[0].tags, function(key, value) {
+            $('#videoTags').append('<span class="player__tags-tag" data-tag='+value+'>'+value+'</span>');
+          });
+    
+          $('.player__tags-tag').click(function(e){
+            videoSearch($(this).data('tag'));
+          });
+          $('#video').css({ display: 'block'});
       } else {
         $('#main').html("No favourites");
       }

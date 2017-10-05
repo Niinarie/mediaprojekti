@@ -1,14 +1,117 @@
-import document from 'global/document';
-import window from 'global/window';
-import videojs from 'video.js';
+/**
+ * videojs-playlist-ui
+ * @version 3.0.6
+ * @copyright 2017 Brightcove, Inc.
+ * @license Apache-2.0
+ */
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('video.js')) :
+	typeof define === 'function' && define.amd ? define(['video.js'], factory) :
+	(factory(global.videojs));
+}(this, (function (videojs) { 'use strict';
+
+videojs = 'default' in videojs ? videojs['default'] : videojs;
+
+var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+var empty = {};
+
+
+var empty$1 = (Object.freeze || Object)({
+	'default': empty
+});
+
+var minDoc = ( empty$1 && empty ) || empty$1;
+
+var topLevel = typeof commonjsGlobal !== 'undefined' ? commonjsGlobal :
+    typeof window !== 'undefined' ? window : {};
+
+
+var doccy;
+
+if (typeof document !== 'undefined') {
+    doccy = document;
+} else {
+    doccy = topLevel['__GLOBAL_DOCUMENT_CACHE@4'];
+
+    if (!doccy) {
+        doccy = topLevel['__GLOBAL_DOCUMENT_CACHE@4'] = minDoc;
+    }
+}
+
+var document_1 = doccy;
+
+var win;
+
+if (typeof window !== "undefined") {
+    win = window;
+} else if (typeof commonjsGlobal !== "undefined") {
+    win = commonjsGlobal;
+} else if (typeof self !== "undefined"){
+    win = self;
+} else {
+    win = {};
+}
+
+var window_1 = win;
+
+var classCallCheck = function (instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+var inherits = function (subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      enumerable: false,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+};
+
+
+
+
+
+
+
+
+
+
+
+var possibleConstructorReturn = function (self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return call && (typeof call === "object" || typeof call === "function") ? call : self;
+};
 
 // support VJS5 & VJS6 at the same time
-const dom = videojs.dom || videojs;
-const registerPlugin = videojs.registerPlugin || videojs.plugin;
+var dom = videojs.dom || videojs;
+var registerPlugin = videojs.registerPlugin || videojs.plugin;
 
 // Array#indexOf analog for IE8
-const indexOf = function(array, target) {
-  for (let i = 0, length = array.length; i < length; i++) {
+var indexOf = function indexOf(array, target) {
+  for (var i = 0, length = array.length; i < length; i++) {
     if (array[i] === target) {
       return i;
     }
@@ -17,26 +120,26 @@ const indexOf = function(array, target) {
 };
 
 // see https://github.com/Modernizr/Modernizr/blob/master/feature-detects/css/pointerevents.js
-const supportsCssPointerEvents = (() => {
-  const element = document.createElement('x');
+var supportsCssPointerEvents = function () {
+  var element = document_1.createElement('x');
 
   element.style.cssText = 'pointer-events:auto';
   return element.style.pointerEvents === 'auto';
-})();
+}();
 
-const defaults = {
+var defaults$$1 = {
   className: 'vjs-playlist',
   playOnSelect: false,
-  supportsCssPointerEvents
+  supportsCssPointerEvents: supportsCssPointerEvents
 };
 
 // we don't add `vjs-playlist-now-playing` in addSelectedClass
 // so it won't conflict with `vjs-icon-play
 // since it'll get added when we mouse out
-const addSelectedClass = function(el) {
+var addSelectedClass = function addSelectedClass(el) {
   el.addClass('vjs-selected');
 };
-const removeSelectedClass = function(el) {
+var removeSelectedClass = function removeSelectedClass(el) {
   el.removeClass('vjs-selected');
 
   if (el.thumbnail) {
@@ -44,28 +147,28 @@ const removeSelectedClass = function(el) {
   }
 };
 
-const upNext = function(el) {
+var upNext = function upNext(el) {
   el.addClass('vjs-up-next');
 };
-const notUpNext = function(el) {
+var notUpNext = function notUpNext(el) {
   el.removeClass('vjs-up-next');
 };
 
-const createThumbnail = function(thumbnail) {
+var createThumbnail = function createThumbnail(thumbnail) {
   if (!thumbnail) {
-    const placeholder = document.createElement('div');
+    var placeholder = document_1.createElement('div');
 
     placeholder.className = 'vjs-playlist-thumbnail vjs-playlist-thumbnail-placeholder';
     return placeholder;
   }
 
-  const picture = document.createElement('picture');
+  var picture = document_1.createElement('picture');
 
   picture.className = 'vjs-playlist-thumbnail';
 
   if (typeof thumbnail === 'string') {
     // simple thumbnails
-    const img = document.createElement('img');
+    var img = document_1.createElement('img');
 
     img.src = thumbnail;
     img.alt = '';
@@ -75,69 +178,74 @@ const createThumbnail = function(thumbnail) {
 
     // additional variations of a <picture> are specified as
     // <source> elements
-    for (let i = 0; i < thumbnail.length - 1; i++) {
-      const variant = thumbnail[i];
-      const source = document.createElement('source');
+    for (var i = 0; i < thumbnail.length - 1; i++) {
+      var _variant = thumbnail[i];
+      var source = document_1.createElement('source');
 
       // transfer the properties of each variant onto a <source>
-      for (const prop in variant) {
-        source[prop] = variant[prop];
+      for (var prop in _variant) {
+        source[prop] = _variant[prop];
       }
       picture.appendChild(source);
     }
 
     // the default version of a <picture> is specified by an <img>
-    const variant = thumbnail[thumbnail.length - 1];
-    const img = document.createElement('img');
+    var variant = thumbnail[thumbnail.length - 1];
+    var _img = document_1.createElement('img');
 
-    img.alt = '';
-    for (const prop in variant) {
-      img[prop] = variant[prop];
+    _img.alt = '';
+    for (var _prop in variant) {
+      _img[_prop] = variant[_prop];
     }
-    picture.appendChild(img);
+    picture.appendChild(_img);
   }
   return picture;
 };
 
-const Component = videojs.getComponent('Component');
+var Component = videojs.getComponent('Component');
 
-class PlaylistMenuItem extends Component {
+var PlaylistMenuItem = function (_Component) {
+  inherits(PlaylistMenuItem, _Component);
 
-  constructor(player, playlistItem, settings) {
+  function PlaylistMenuItem(player, playlistItem, settings) {
+    classCallCheck(this, PlaylistMenuItem);
+
     if (!playlistItem.item) {
       throw new Error('Cannot construct a PlaylistMenuItem without an item option');
     }
 
-    super(player, playlistItem);
-    this.item = playlistItem.item;
+    var _this = possibleConstructorReturn(this, _Component.call(this, player, playlistItem));
 
-    this.playOnSelect = settings.playOnSelect;
+    _this.item = playlistItem.item;
 
-    this.emitTapEvents();
+    _this.playOnSelect = settings.playOnSelect;
 
-    this.on(['click', 'tap'], this.switchPlaylistItem_);
-    this.on('keydown', this.handleKeyDown_);
+    _this.emitTapEvents();
 
+    _this.on(['click', 'tap'], _this.switchPlaylistItem_);
+    _this.on('keydown', _this.handleKeyDown_);
+
+    return _this;
   }
 
-  handleKeyDown_(event) {
+  PlaylistMenuItem.prototype.handleKeyDown_ = function handleKeyDown_(event) {
     // keycode 13 is <Enter>
     // keycode 32 is <Space>
     if (event.which === 13 || event.which === 32) {
       this.switchPlaylistItem_();
     }
-  }
+  };
 
-  switchPlaylistItem_(event) {
+  PlaylistMenuItem.prototype.switchPlaylistItem_ = function switchPlaylistItem_(event) {
     this.player_.playlist.currentItem(indexOf(this.player_.playlist(), this.item));
     if (this.playOnSelect) {
       this.player_.play();
     }
-  }
+  };
 
-  createEl() {
-    const li = document.createElement('li');
-    const item = this.options_.item;
+  PlaylistMenuItem.prototype.createEl = function createEl() {
+    var li = document_1.createElement('li');
+    var item = this.options_.item;
 
     li.className = 'vjs-playlist-item';
     li.setAttribute('tabIndex', 0);
@@ -148,125 +256,132 @@ class PlaylistMenuItem extends Component {
 
     // Duration
     if (item.duration) {
-      const duration = document.createElement('time');
-      const time = videojs.formatTime(item.duration);
+      var duration = document_1.createElement('time');
+      var time = videojs.formatTime(item.duration);
 
       duration.className = 'vjs-playlist-duration';
       duration.setAttribute('datetime', 'PT0H0M' + item.duration + 'S');
-      duration.appendChild(document.createTextNode(time));
+      duration.appendChild(document_1.createTextNode(time));
       li.appendChild(duration);
     }
 
     // Now playing
-    const nowPlayingEl = document.createElement('span');
-    const nowPlayingText = this.localize('Now Playing');
+    var nowPlayingEl = document_1.createElement('span');
+    var nowPlayingText = this.localize('Now Playing');
 
     nowPlayingEl.className = 'vjs-playlist-now-playing-text';
-    nowPlayingEl.appendChild(document.createTextNode(nowPlayingText));
+    nowPlayingEl.appendChild(document_1.createTextNode(nowPlayingText));
     nowPlayingEl.setAttribute('title', nowPlayingText);
     this.thumbnail.appendChild(nowPlayingEl);
 
     // Title container contains title and "up next"
-    const titleContainerEl = document.createElement('div');
+    var titleContainerEl = document_1.createElement('div');
 
     titleContainerEl.className = 'vjs-playlist-title-container';
     this.thumbnail.appendChild(titleContainerEl);
 
     // Up next
-    const upNextEl = document.createElement('span');
-    const upNextText = this.localize('Up Next');
+    var upNextEl = document_1.createElement('span');
+    var upNextText = this.localize('Up Next');
 
     upNextEl.className = 'vjs-up-next-text';
-    upNextEl.appendChild(document.createTextNode(upNextText));
+    upNextEl.appendChild(document_1.createTextNode(upNextText));
     upNextEl.setAttribute('title', upNextText);
     titleContainerEl.appendChild(upNextEl);
 
     // Video title
-    const titleEl = document.createElement('cite');
-    const titleText = item.name || this.localize('Untitled Video');
+    var titleEl = document_1.createElement('cite');
+    var titleText = item.name || this.localize('Untitled Video');
 
     titleEl.className = 'vjs-playlist-name';
-    titleEl.appendChild(document.createTextNode(titleText));
+    titleEl.appendChild(document_1.createTextNode(titleText));
     titleEl.setAttribute('title', titleText);
     titleContainerEl.appendChild(titleEl);
 
     return li;
-  }
-}
+  };
 
-class PlaylistMenu extends Component {
+  return PlaylistMenuItem;
+}(Component);
 
-  constructor(player, settings) {
+var PlaylistMenu = function (_Component2) {
+  inherits(PlaylistMenu, _Component2);
+
+  function PlaylistMenu(player, settings) {
+    classCallCheck(this, PlaylistMenu);
+
     if (!player.playlist) {
       throw new Error('videojs-playlist is required for the playlist component');
     }
 
-    super(player, settings);
-    this.items = [];
+    var _this2 = possibleConstructorReturn(this, _Component2.call(this, player, settings));
+
+    _this2.items = [];
 
     // If CSS pointer events aren't supported, we have to prevent
     // clicking on playlist items during ads with slightly more
     // invasive techniques. Details in the stylesheet.
     if (settings.supportsCssPointerEvents) {
-      this.addClass('vjs-csspointerevents');
+      _this2.addClass('vjs-csspointerevents');
     }
 
-    this.createPlaylist_();
+    _this2.createPlaylist_();
 
     if (!videojs.browser.TOUCH_ENABLED) {
-      this.addClass('vjs-mouse');
+      _this2.addClass('vjs-mouse');
     }
 
-    player.on(['loadstart', 'playlistchange'], (event) => {
-      this.update();
+    player.on(['loadstart', 'playlistchange'], function (event) {
+      _this2.update();
     });
 
     // Keep track of whether an ad is playing so that the menu
     // appearance can be adapted appropriately
-    player.on('adstart', () => {
-      this.addClass('vjs-ad-playing');
+    player.on('adstart', function () {
+      _this2.addClass('vjs-ad-playing');
     });
 
-    player.on('adend', () => {
-      this.removeClass('vjs-ad-playing');
+    player.on('adend', function () {
+      _this2.removeClass('vjs-ad-playing');
     });
+    return _this2;
   }
 
-  createEl() {
-    const settings = this.options_;
+  PlaylistMenu.prototype.createEl = function createEl() {
+    var settings = this.options_;
 
     if (settings.el) {
       return settings.el;
     }
 
-    const ol = document.createElement('ol');
+    var ol = document_1.createElement('ol');
 
     ol.className = settings.className;
     settings.el = ol;
     return ol;
-  }
+  };
 
-  createPlaylist_() {
-    const playlist = this.player_.playlist() || [];
-    let list = this.el_.querySelector('.vjs-playlist-item-list');
-    let overlay = this.el_.querySelector('.vjs-playlist-ad-overlay');
+  PlaylistMenu.prototype.createPlaylist_ = function createPlaylist_() {
+    var playlist = this.player_.playlist() || [];
+    var list = this.el_.querySelector('.vjs-playlist-item-list');
+    var overlay = this.el_.querySelector('.vjs-playlist-ad-overlay');
 
     if (!list) {
-      list = document.createElement('ol');
+      list = document_1.createElement('ol');
       list.className = 'vjs-playlist-item-list';
       this.el_.appendChild(list);
     }
 
     // remove any existing items
-    for (let i = 0; i < this.items.length; i++) {
+    for (var i = 0; i < this.items.length; i++) {
       list.removeChild(this.items[i].el_);
     }
     this.items.length = 0;
 
     // create new items
-    for (let i = 0; i < playlist.length; i++) {
-      const item = new PlaylistMenuItem(this.player_, {
-        item: playlist[i]
+    for (var _i = 0; _i < playlist.length; _i++) {
+      var item = new PlaylistMenuItem(this.player_, {
+        item: playlist[_i]
       }, this.options_);
 
       this.items.push(item);
@@ -277,7 +392,7 @@ class PlaylistMenu extends Component {
     // none" so we use this element to block clicks during ad
     // playback.
     if (!overlay) {
-      overlay = document.createElement('li');
+      overlay = document_1.createElement('li');
       overlay.className = 'vjs-playlist-ad-overlay';
       list.appendChild(overlay);
     } else {
@@ -286,22 +401,22 @@ class PlaylistMenu extends Component {
     }
 
     // select the current playlist item
-    const selectedIndex = this.player_.playlist.currentItem();
+    var selectedIndex = this.player_.playlist.currentItem();
 
     if (this.items.length && selectedIndex >= 0) {
       addSelectedClass(this.items[selectedIndex]);
 
-      const thumbnail = this.items[selectedIndex].$('.vjs-playlist-thumbnail');
+      var thumbnail = this.items[selectedIndex].$('.vjs-playlist-thumbnail');
 
       if (thumbnail) {
         dom.addClass(thumbnail, 'vjs-playlist-now-playing');
       }
     }
-  }
+  };
 
-  update() {
+  PlaylistMenu.prototype.update = function update() {
     // replace the playlist items being displayed, if necessary
-    const playlist = this.player_.playlist();
+    var playlist = this.player_.playlist();
 
     if (this.items.length !== playlist.length) {
       // if the menu is currently empty or the state is obviously out
@@ -310,7 +425,7 @@ class PlaylistMenu extends Component {
       return;
     }
 
-    for (let i = 0; i < this.items.length; i++) {
+    for (var i = 0; i < this.items.length; i++) {
       if (this.items[i].item !== playlist[i]) {
         // if any of the playlist items have changed, rebuild the
         // entire playlist
@@ -320,18 +435,18 @@ class PlaylistMenu extends Component {
     }
 
     // the playlist itself is unchanged so just update the selection
-    const currentItem = this.player_.playlist.currentItem();
+    var currentItem = this.player_.playlist.currentItem();
 
-    for (let i = 0; i < this.items.length; i++) {
-      const item = this.items[i];
+    for (var _i2 = 0; _i2 < this.items.length; _i2++) {
+      var item = this.items[_i2];
 
-      if (i === currentItem) {
+      if (_i2 === currentItem) {
         addSelectedClass(item);
-        if (document.activeElement !== item.el()) {
+        if (document_1.activeElement !== item.el()) {
           dom.addClass(item.thumbnail, 'vjs-playlist-now-playing');
         }
         notUpNext(item);
-      } else if (i === currentItem + 1) {
+      } else if (_i2 === currentItem + 1) {
         removeSelectedClass(item);
         upNext(item);
       } else {
@@ -339,32 +454,36 @@ class PlaylistMenu extends Component {
         notUpNext(item);
       }
     }
-  }
-}
+  };
+
+  return PlaylistMenu;
+}(Component);
 
 /**
  * Initialize the plugin.
  * @param options (optional) {object} configuration for the plugin
  */
-const playlistUi = function(options) {
-  const player = this;
-  let settings;
-  let elem;
+
+
+var playlistUi = function playlistUi(options) {
+  var player = this;
+  var settings = void 0;
+  var elem = void 0;
 
   if (!player.playlist) {
     throw new Error('videojs-playlist is required for the playlist component');
   }
 
   // if the first argument is a DOM element, use it to build the component
-  if ((typeof window.HTMLElement !== 'undefined' && options instanceof window.HTMLElement) ||
-      // IE8 does not define HTMLElement so use a hackier type check
-      (options && options.nodeType === 1)) {
+  if (typeof window_1.HTMLElement !== 'undefined' && options instanceof window_1.HTMLElement ||
+  // IE8 does not define HTMLElement so use a hackier type check
+  options && options.nodeType === 1) {
     elem = options;
-    settings = videojs.mergeOptions(defaults);
+    settings = videojs.mergeOptions(defaults$$1);
   } else {
     // lookup the elements to use by class name
-    settings = videojs.mergeOptions(defaults, options);
-    elem = document.querySelector('.' + settings.className);
+    settings = videojs.mergeOptions(defaults$$1, options);
+    elem = document_1.querySelector('.' + settings.className);
   }
 
   // build the playlist menu
@@ -378,3 +497,5 @@ videojs.registerComponent('PlaylistMenuItem', PlaylistMenuItem);
 
 // register the plugin
 registerPlugin('playlistUi', playlistUi);
+
+})));
