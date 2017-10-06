@@ -212,6 +212,7 @@ span {
   height: 98%;
   padding: 20px;
   margin: 0;
+  cursor: pointer;
   -moz-transition: all 0.2s ease-out;
   /* FF4+ */
   -o-transition: all 0.2s ease-out;
