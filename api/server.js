@@ -1,6 +1,8 @@
+// https://www.codementor.io/olatundegaruba/nodejs-restful-apis-in-10-minutes-q0sgsfhbd
+
 var express = require('express'),
 app = express(),
-port = process.env.PORT || 3000,
+port = process.env.PORT || 5050,
 mongoose = require('mongoose'),
 Video = require('./models/videoModel'), //created model loading here
 bodyParser = require('body-parser');

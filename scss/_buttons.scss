@@ -16,6 +16,20 @@
   background-color: $gray!important;
   color: $white!important;
 }
+.mobile-desc {
+  display: block;
+  position: absolute;
+  top: 0.7em;
+  left: 0.7em;
+  background: none;
+  border: 0;
+  color: $light-gray;
+  z-index:901;
+
+  @media #{$desktop} {
+    display: none;
+  }
+}
 
 .button--favourite {
   cursor: pointer;
@@ -34,10 +48,8 @@
 }
 
 .button--remove {
-  color: $red;
+  color: $bright-blue;
 }
-
-
 
 .button--favourite:hover {
   color: $white;

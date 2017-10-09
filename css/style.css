@@ -70,6 +70,19 @@
   background-color: #A49A99 !important;
   color: #fff !important; }
 
+.mobile-desc {
+  display: block;
+  position: absolute;
+  top: 0.7em;
+  left: 0.7em;
+  background: none;
+  border: 0;
+  color: #E8DDD9;
+  z-index: 901; }
+  @media (min-width: 1024px) {
+    .mobile-desc {
+      display: none; } }
+
 .button--favourite {
   cursor: pointer;
   background: none;
@@ -85,7 +98,7 @@
       top: 1em; } }
 
 .button--remove {
-  color: #673342; }
+  color: #0275d8; }
 
 .button--favourite:hover {
   color: #fff;

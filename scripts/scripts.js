@@ -1,6 +1,8 @@
-const apiURL = "http://localhost:3000/";
+const apiURL = "http://iinar.net:5050/";
+
 
 var addToFav = function(id) {
+  //add video id to favourites
   let favs;
   if (localStorage.getItem('favs') === null) {
     favs = [];
@@ -11,7 +13,6 @@ var addToFav = function(id) {
   if (!this.checkIfFavExists(id, favs)) {
     favs.push(id);
     localStorage.setItem('favs', JSON.stringify(favs));
-    console.log(id+' Added to favs');
     getFavs();
   }
 }
@@ -24,13 +25,11 @@ var addToFav = function(id) {
     }
 
   var removeById = function(list, id) {
-    // this has been copied straight from stackoverflow
     // go through given array, check if id matches
     // if yes, splice the array on corresponsing index ,removing the array item
     let i = list.length;
     while (i--) {
        if ( list[i] && list[i] == id ) {
-         console.log('removed '+id);
            list.splice(i, 1);
            return list;
        }
@@ -39,7 +38,7 @@ var addToFav = function(id) {
   }
 
   var checkIfFavExists = function(id, list) {
-  // go through given list/array and check if given object's(obj) id matches any existing array object
+  // go through given list/array and check if given id matches any existing array id
     let i;
       for (i = 0; i < list.length; i++) {
         if (list[i] == id) {
@@ -50,9 +49,9 @@ var addToFav = function(id) {
   }
 
   var checkAllFavs = function(videos) {    
+    // go through a list of videos and add parameter isliked so ui can display like-button status correctly
         if (!videos.length) {
         } else {
-            // check if a recipe already exists in localStorage, using recipeExists() function
             let favs = JSON.parse(localStorage.getItem('favs'));
             if (favs) {
                 for (let video of videos) {
@@ -68,12 +67,14 @@ var addToFav = function(id) {
       }
 
   var getFavs = function() {
+    //return list of favs
     let favs;
     favs = JSON.parse(localStorage.getItem('favs'));
     return favs;
   }
 
   var getAllVideos = function() {
+    //get all video info from api, render them on #main and add click events
     if($('#videoPlayer').length) {
       videojs('videoPlayer').dispose();
     }
@@ -85,7 +86,6 @@ var addToFav = function(id) {
       contentType: "application/json"
     }).done(function( data ) {
       data = checkAllFavs(data);
-      console.log(data);
       $('#main').html('');
       var counter = 1;
       $('#main').append('<h2>Fresh:</h2><div id="gridFresh" class="grid">')
@@ -100,6 +100,7 @@ var addToFav = function(id) {
           html += '<button class="button--favourite';
           {value.isliked ? html +=' button--remove" ' : html+=' button--add" '};
           html += 'data-favId='+value.id+'><i class="fa fa-2x fa-star" aria-hidden="true"></i></button>';
+          html += '<button class="mobile-desc"><i class="fa fa-2x fa-question-circle" aria-hidden="true"></i></button>';
           html += '<div class="description grid-link" data-id='+value.id+'><p>'+value.description+'</p>';
           html += '<div class="tags"><i class="fa fa-tags" aria-hidden="true"></i>';
           $.each(value.tags, function(key,value) {
@@ -129,10 +130,20 @@ var addToFav = function(id) {
        playVideo($(this).parent().data('value'));
        window.scrollTo(0, 0);
       })
+      $('.mobile-desc').click(function(e) {
+        var value =  $(this).next('div.description').css('opacity');
+        if (value == 1) {
+          value = 0;
+        } else {
+          value = 1;
+        }
+        $(this).next('div.description').css({opacity:value});
+      })
     });
   }
 
   var playVideo = function(video) {
+    //play gicen video, add information to info boxes, tags and click event for tags
     if($('#videoPlayer').length) {
       videojs('videoPlayer').dispose();
     }
@@ -170,13 +181,13 @@ var addToFav = function(id) {
  }
 
   var videoSearch = function(tags) {
+    // do API call with given tags, render list of videos if results found
     if($('#videoPlayer').length) {
       videojs('videoPlayer').dispose();
     }
     $('#video').css({display: 'none'});
     $('#playlist').html('');
     $('#main').html('Loading...');
-    console.log(tags);
     $.ajax({
       url: apiURL+ "videos/search/"+tags,
       type: "GET",
@@ -223,12 +234,12 @@ var addToFav = function(id) {
   }
 
   var favouriteSearch = function() {
+    // get list of favourites from localstorage, render first video and playlist
     if($('#videoPlayer').length) {
       videojs('videoPlayer').dispose();
     }
     $('#video__div').html('<video id="videoPlayer" class="video-js vjs-fluid vjs-playlistvideo"></video>');
     let favourites = getFavs();
-    console.log(favourites.toString());
     $.ajax({
       url: apiURL+ "videos/idsearch",
       type: "POST",
@@ -297,20 +308,24 @@ var addToFav = function(id) {
           $('#video').css({ display: 'block'});
       } else {
         $('#main').html("No favourites");
+        $('#video').css({display: 'none'});
       }
     });
   }
 
+  // click event for search
   $('#searchBtn').click(function(e){
     e.preventDefault();
     videoSearch($('#searchFrm').val());
   });
 
+  // fetch all videos when clicking links to front page
   $('.link-home').click(function(e) {
     e.preventDefault();
     getAllVideos()
   });
 
+  // get favourites
   $('#favourites').click(function(e){
     e.preventDefault();
     favouriteSearch();
